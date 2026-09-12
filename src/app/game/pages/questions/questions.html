@@ -1,0 +1,76 @@
+<div class="flex justify-center min-h-screen">
+    <section class="mt-5 ml-8 mr-8">
+        <div class="overflow-x-auto">
+            <h2 class="text-2xl font-montserrat font-bold text-secondary text-center mb-2">
+                Registrar Pregunta
+            </h2>
+            <select class="select select-primary w-full max-w-s" (change)="setCategory($event)"> 
+                                
+                @for (cat of listCategories(); track $index) {
+                    <option [value]="cat.id">{{cat.name | uppercase}} - {{cat.subjectDto.name}} - Nivel {{cat.complexityDto.level}}</option>
+                }                
+            </select>
+            <br/><br/>
+
+            <form class="flex flex-col gap-4 w-[80vw] max-w-[800px]" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                <div class="flex w-full flex-col lg:flex-row">
+                    <div class="card rounded-box grid w-full place-items-center gap-2">
+
+                        <label class="input input-bordered input-primary flex items-center gap-2 w-full">
+                            
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="h-5 w-5 opacity-70">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm10.5-3.75a1.5 1.5 0 1 0-3 0 .75.75 0 0 1-1.5 0 3 3 0 1 1 6 0c0 1.056-.348 1.527-1.25 2.25-.548.44-.875.7-.875 1.5a.75.75 0 0 1-1.5 0c0-1.5.75-2.1 1.438-2.65.55-.44.687-.6.687-1.1ZM12 17.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+                            <input
+                                type="text"
+                                class="grow"
+                                placeholder="Escribe la pregunta..."
+                                formControlName="name" />
+                        </label>
+
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-secondary w-full">REGISTRAR PREGUNTA 
+                    @if (isLoadingReg()) {
+                        <span class="loading loading-spinner"></span>
+                    }            
+                </button>
+            </form>
+
+            <br/>
+            <table class="table table-zebra table-xs">
+                <caption class="text-info font-bold text-base" style="margin-bottom: 16px;">PREGUNTAS REGISTRADAS</caption>
+                <!-- head -->
+                <thead>
+                    <tr>
+                        <th class="text-info font-bold">#</th>
+                        <th class="text-info font-bold">NOMBRE</th>
+                        <th class="text-info font-bold">CATEGORIA</th>
+                        <th class="text-info font-bold">NIVEL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (question of listQuestions(); track question.id) {
+                    <tr>
+                        <td>{{question.id}}</td>
+                        <td>{{question.name | uppercase}}</td>
+                        <td>{{question.categoryDto.name | uppercase}} {{question.categoryDto.subjectDto.name | uppercase}}</td>
+                        <td>{{question.categoryDto.idComplexity}}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </section>
+
+</div>

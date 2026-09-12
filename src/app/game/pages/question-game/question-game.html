@@ -1,0 +1,89 @@
+<div class="flex justify-center min-h-screen">
+    <section class="mt-5 ml-8 mr-8">
+        <div class="overflow-x-auto">
+            <h2 class="text-2xl font-montserrat font-bold text-secondary text-center mb-2">
+                GAME QUESTION
+            </h2>
+            <br/><br/> @if(!round()){
+            <button type="button" class="btn btn-secondary w-full" (click)="startGame()">INICIAR JUEGO
+                    @if (isLoadingReg()) {
+                        <span class="loading loading-spinner"></span>
+                    }            
+                </button> }
+            <br/> @if(round()){
+            <h3 class="text-2xl font-montserrat font-bold text-warning text-center mb-2">Pregunta: {{round()!.questionDto.name}}</h3>
+            <br/>
+
+            <select class="select select-primary  w-[600px]" (change)="setAnswer($event)"> 
+                                
+                @for (answer of answerList(); track $index) {
+                    <option [value]="answer.id">{{answer.name | uppercase}}></option>
+                }                
+            </select>
+            <br/><br/>
+            <button type="button" class="btn btn-secondary w-full" (click)="answerGame()" [disabled]="disabled()">RESPONDER
+                    @if (isLoadingReg()) {
+                        <span class="loading loading-spinner"></span>
+                    }            
+                </button> }
+
+            <br/> @if(endGame()){
+            <h3 class="text-2xl font-montserrat font-bold text-success text-center mb-2">
+                JUEGO FINALIZADO
+            </h3>
+            } @if(continue()){
+            <h3 class="text-2xl font-montserrat font-bold text-success text-center mb-2">Respuesta Correcta</h3>
+
+            <table class="table table-zebra table-xs">
+                <!-- head -->
+                <thead>
+                    <tr>
+                        <th>PUNTOS</th>
+                        <th>DINERO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{round()!.gameDto.accumulatedPoints}}</td>
+                        <td>{{round()!.gameDto.accumulatedMoney}}</td>
+                    </tr>
+                </tbody>
+            </table><br/> @if(!endGame()){
+            <button type="button" class="btn btn-secondary w-full" (click)="nextRound()">CONTINUAR
+                    @if (isLoadingReg()) {
+                        <span class="loading loading-spinner"></span>
+                    }            
+                </button> } @else{
+            <button type="button" class="btn btn-secondary w-full" (click)="startGame()">JUGAR NUEVAMENTE
+                    @if (isLoadingReg()) {
+                        <span class="loading loading-spinner"></span>
+                    }            
+                </button> } } @if(error()){
+            <h3 class="text-2xl font-montserrat font-bold text-error text-center mb-2">Respuesta Incorrecta</h3>
+
+            <table class="table table-zebra table-xs">
+                <!-- head -->
+                <thead>
+                    <tr>
+                        <th>PUNTOS</th>
+                        <th>DINERO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{round()!.gameDto.accumulatedPoints}}</td>
+                        <td>{{round()!.gameDto.accumulatedMoney}}</td>
+                    </tr>
+                </tbody>
+            </table><br/>
+            <button type="button" class="btn btn-secondary w-full" (click)="startGame()">JUGAR NUEVAMENTE
+                    @if (isLoadingReg()) {
+                        <span class="loading loading-spinner"></span>
+                    }            
+                </button> }
+
+
+        </div>
+    </section>
+
+</div>

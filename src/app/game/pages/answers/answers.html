@@ -1,0 +1,81 @@
+<div class="flex justify-center min-h-screen">
+    <section class="mt-5 ml-8 mr-8">
+        <div class="overflow-x-auto">
+            <h2 class="text-2xl font-montserrat font-bold text-secondary text-center mb-2">
+                Registrar Respuesta
+            </h2>
+            <select class="select select-primary w-full max-w-s" (change)="setQuestion($event)"> 
+                                
+                @for (ques of listQuestions(); track $index) {
+                    <option [value]="ques.id">{{ques.name | uppercase}} - {{ques.categoryDto.subjectDto.name}} - Nivel {{ques.categoryDto.idComplexity}}</option>
+                }                
+            </select>
+
+            <select class="select select-primary w-full mt-2" (change)="setAnswerVF($event)">
+                <option value="true" selected>RESPUESTA VERDADERA</option>
+                <option value="false">RESPUESTA FALSA</option>
+            </select>
+
+
+            <form class="flex flex-col gap-4 w-[80vw] max-w-[800px] mt-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                <div class="flex w-full flex-col lg:flex-row">
+                    <div class="card rounded-box grid w-full place-items-center gap-2">
+
+                        <label class="input input-bordered input-primary flex items-center gap-2 w-full">
+                            
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="h-5 w-5 opacity-70">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M2.25 12a9.75 9.75 0 1 1 19.5 0 9.75 9.75 0 0 1-19.5 0ZM12 6.75a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V7.5a.75.75 0 0 1 .75-.75ZM12 16.5a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+                            <input
+                                type="text"
+                                class="grow"
+                                placeholder="Escribe la respuesta..."
+                                formControlName="name" />
+                        </label>
+
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-secondary w-full">REGISTRAR RESPUESTA 
+                    @if (isLoadingReg()) {
+                        <span class="loading loading-spinner"></span>
+                    }            
+                </button>
+            </form>
+
+            <br/>
+            <table class="table table-zebra table-xs">
+                <caption class="text-info font-bold text-base" style="margin-bottom: 16px;">RESPUESTAS REGISTRADAS</caption>
+                <!-- head -->
+                <thead>
+                    <tr>
+                        <th class="text-info font-bold">#</th>
+                        <th class="text-info font-bold">PREGUNTA</th>
+                        <th class="text-info font-bold">RESPUESTA</th>
+                        <th class="text-info font-bold">RESULTADO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (answer of listAnswers(); track answer.id) {
+                    <tr>
+                        <td>{{answer.id}}</td>
+                        <td>{{answer.questionDto.name| uppercase}}</td>
+                        <td>{{answer.name | uppercase}}</td>
+                        <td>{{answer.correct ? 'VERDADERO' : 'FALSO'}}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </section>
+
+</div>
