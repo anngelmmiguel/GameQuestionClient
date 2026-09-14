@@ -49,7 +49,7 @@ export class Answers {
         data.idQuestion = this.idQuestion();
         data.correct = this.idAnswerVF();
     
-        console.log(this.listAnswers);
+        
         //----Validación
         if(data.correct && this.listAnswers() != null && this.listAnswers().length > 0){
           var listAnsw = this.listAnswers().filter(x => x.idQuestion == data.idQuestion);
