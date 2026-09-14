@@ -53,7 +53,7 @@ export class RegisterPage {
     this.authService.registerUser(data)
       .subscribe((isAuthenticated) => {
         if(isAuthenticated){
-          this.router.navigateByUrl('/register-subjects');
+          this.router.navigateByUrl('/game-question-answer');
           return;
         }
 

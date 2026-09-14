@@ -1,21 +1,23 @@
 <div class="flex justify-center min-h-screen">
     <section class="mt-5 ml-8 mr-8">
         <div class="overflow-x-auto">
-            <h2 class="text-2xl font-montserrat font-bold text-secondary text-center mb-2">
+            <h2 class="text-3xl font-montserrat font-bold text-secondary text-center mb-2">
                 GAME QUESTION
             </h2>
-            <br/><br/> @if(!round()){
+            @if(!round()){
+            <br/><br/>
             <button type="button" class="btn btn-secondary w-full" (click)="startGame()">INICIAR JUEGO
                     @if (isLoadingReg()) {
                         <span class="loading loading-spinner"></span>
                     }            
-                </button> }
-            <br/> @if(round()){
-            <h3 class="text-2xl font-montserrat font-bold text-warning text-center mb-2">Pregunta: {{round()!.questionDto.name}}</h3>
+                </button> } @if(round()){
+            <h3 class="text-2xl font-montserrat font-bold text-warning text-center mb-2">
+                NIVEL {{round()!.questionDto.categoryDto.idComplexity}} - {{round()!.questionDto.categoryDto.subjectDto.name}} - Pregunta ({{round()?.numberRound}}/5)
+            </h3>
+            <h3 class="text-2xl font-montserrat font-bold text-warning text-center mb-2">{{round()!.questionDto.name}}</h3>
             <br/>
 
-            <select class="select select-primary  w-[600px]" (change)="setAnswer($event)"> 
-                                
+            <select class="select select-primary  w-[600px]" (change)="setAnswer($event)" [disabled]="disabled()">                      
                 @for (answer of answerList(); track $index) {
                     <option [value]="answer.id">{{answer.name | uppercase}}></option>
                 }                
@@ -27,15 +29,16 @@
                     }            
                 </button> }
 
-            <br/> @if(endGame()){
-            <h3 class="text-2xl font-montserrat font-bold text-success text-center mb-2">
+            <br/><br/> @if(endGame()){
+            <h3 class="text-3xl font-dancing font-bold text-secondary text-center mb-2">
                 JUEGO FINALIZADO
             </h3>
             } @if(continue()){
-            <h3 class="text-2xl font-montserrat font-bold text-success text-center mb-2">Respuesta Correcta</h3>
-
+            <h3 class="text-2xl font-montserrat font-bold text-success text-center mb-2">Respuesta Correcta!</h3>
+            <h3 class="text-2xs font-montserrat font-bold text-success text-center mb-2">Ganaste {{round()!.rewardDto.value}} {{round()!.rewardDto.type == "D" ? 'USD': 'Puntos'}}</h3>
             <table class="table table-zebra table-xs">
                 <!-- head -->
+                <caption class="text-info font-bold text-base" style="margin-bottom: 16px;">ACUMULADO TOTAL</caption>
                 <thead>
                     <tr>
                         <th>PUNTOS</th>
@@ -44,8 +47,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{round()!.gameDto.accumulatedPoints}}</td>
-                        <td>{{round()!.gameDto.accumulatedMoney}}</td>
+                        <td>{{round()!.gameDto.accumulatedPoints}} Puntos</td>
+                        <td>{{round()!.gameDto.accumulatedMoney}} USD</td>
                     </tr>
                 </tbody>
             </table><br/> @if(!endGame()){
@@ -63,6 +66,7 @@
 
             <table class="table table-zebra table-xs">
                 <!-- head -->
+                <caption class="text-info font-bold text-base" style="margin-bottom: 16px;">ACUMULADO TOTAL</caption>
                 <thead>
                     <tr>
                         <th>PUNTOS</th>

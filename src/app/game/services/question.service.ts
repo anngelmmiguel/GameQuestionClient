@@ -88,7 +88,7 @@ export class QuestionService {
   }
 
 
-  GetRoundsByIdUser(): Observable<roundDto> {
+  GetRoundByIdUser(): Observable<roundDto> {
       const token = localStorage.getItem('tokenRegister');
       if(!token) {
         return of();

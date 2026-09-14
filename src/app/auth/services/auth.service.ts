@@ -54,8 +54,8 @@ export class AuthService {
       identificationNumber: userCredentialsRegisterDTO.identificationNumber,
       password: userCredentialsRegisterDTO.password,
       name: userCredentialsRegisterDTO.name,
-      email: userCredentialsRegisterDTO.email,
-      idAcademicProgram : userCredentialsRegisterDTO.idAcademicProgram
+      email: userCredentialsRegisterDTO.email //,
+      //idAcademicProgram : userCredentialsRegisterDTO.idAcademicProgram
     }).pipe(
       map((resp) => this.handleAuthSuccess(resp)),
       catchError((error: any) => this.handleAuthError(error))
